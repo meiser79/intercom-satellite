@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A symbol to pick: the icon alone, the selected one filled in. -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.Chip.Filter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:checkable="true"
+    app:checkedIconVisible="false"
+    app:chipIconSize="22dp"
+    app:chipIconTint="?attr/colorOnSurfaceVariant"
+    app:chipIconVisible="true"
+    app:chipMinTouchTargetSize="48dp"
+    app:chipStartPadding="10dp"
+    app:chipEndPadding="10dp"
+    app:iconStartPadding="0dp"
+    app:iconEndPadding="0dp"
+    app:textStartPadding="0dp"
+    app:textEndPadding="0dp" />

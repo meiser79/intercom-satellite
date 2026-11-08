@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Kiosk online. The ring in the kiosk tile's color sets the badge off the room icon. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval"><solid android:color="?attr/colorSurfaceContainerHighest" /><size android:width="16dp" android:height="16dp" /></shape>
+    </item>
+    <item android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp">
+        <shape android:shape="oval"><solid android:color="@color/widget_status_online" /></shape>
+    </item>
+</layer-list>

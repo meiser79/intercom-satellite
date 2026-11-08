@@ -1,50 +1,104 @@
-# Intercom Satelite
+# Intercom Satellite
 
-Unofficial Android companion for [Kiosk Satellite](https://github.com/jxlarrea/kiosk-satellite). Install a signed APK on Android 12 or later, enter the same Intercom key as your kiosks, and enable the app's phone account to receive calls in the system Phone app. The package ID is unchanged from Intercom Pocket; updates must be signed with the original signing certificate.
+An Android intercom for [Kiosk Satellite](https://github.com/jxlarrea/kiosk-satellite). Call your kiosks from your phone, take their calls in Android's own phone app, see who is at the door on video, and make announcements to several rooms at once.
 
-Calls and announcements stay on the local network. Audio is never recorded. No Kiosk Satellite code, logo, or assets are bundled.
+Intercom Satellite is an independent companion and not affiliated with Kiosk Satellite.
+
+Calls stay on your local network: no cloud and no account, and nothing is recorded. Android 12 or later.
+
+## Screenshots
+
+| Kiosks | Incoming call | In a call |
+|---|---|---|
+| <img src="docs/screenshots/kiosks.png" width="250" alt="The kiosk list with four kiosks, one in Do not disturb"> | <img src="docs/screenshots/incoming-call.png" width="250" alt="An incoming call from the Hallway kiosk"> | <img src="docs/screenshots/call.png" width="250" alt="A call with the Hold to talk button"> |
+| **Incoming video call** | **Video call** | **Dark theme** |
+| <img src="docs/screenshots/incoming-video-call.png" width="250" alt="An incoming video call from the Kitchen kiosk, showing its picture"> | <img src="docs/screenshots/video-call.png" width="250" alt="A video call with the kitchen's picture and the phone's own camera in the corner"> | <img src="docs/screenshots/kiosks-dark.png" width="250" alt="The kiosk list in the dark theme"> |
+
+The kiosks in the screenshots are simulated, and the pictures are drawings.
 
 ## Features
 
-- Two-way calls from phone to kiosk and kiosk to phone, with system-managed incoming Android calls
-- Push-to-talk, hands-free mode, speaker control, and certificate pin confirmation
-- One-to-many announcements to available kiosks; a single failed kiosk does not end the other audio sockets
-- Announce to all available kiosks, a one-time selection, or saved local room groups; each recipient's connection status is shown
-- Independently disable incoming announcements while keeping individual calls enabled
-- Home-screen kiosk widget with a confirmed per-widget destination
-- Optional start after boot or app update, if reception was enabled before restart
-- Local metadata-only call history with verified callback; no audio or shared secret in history
-- Weekly quiet hours, overnight schedules, and selected kiosk exceptions; manual Do Not Disturb still blocks everyone
-- Temporary Do Not Disturb for 30 minutes, two hours, or until 07:00 tomorrow; expiration preserves scheduled quiet hours
-- Room aliases, icons, favorites, and system/light/dark themes with teal, blue, plum, or Android dynamic accent colors
-- A dedicated settings page, a card-based call screen, and a full call-history page with callbacks
+**Calls**
+- Call any kiosk on the network and take its calls, two-way, with push-to-talk or hands-free.
+- Incoming calls ring in Android's phone app through its own calling account, also when the phone is locked.
+- Call audio goes to a connected Bluetooth or wired headset by itself, and the headset's button answers and ends calls.
+- The phone vibrates while a call rings (not in silent mode), and the screen turns off while you hold the phone to your ear.
 
-Long-press a kiosk row to edit its name, symbol, or favorite status. Add a widget from the Android home screen and select its kiosk. The widget opens the app, rechecks the saved kiosk identity, and then calls. Boot reception and quiet hours are configured in settings.
+**Video**
+- Video calls with kiosks that support them: see the kiosk's camera and, once you tap, send your own.
+- Switch between the front and back camera during the call.
+- Leave the app and the kiosk's picture stays on screen in a picture-in-picture window.
+- Works in the app's call screen and, through Android's video calling API, in phone apps that show video.
+- Three quality levels, from 640 × 480 at 15 fps to 1280 × 720 at 30 fps.
 
-Use **Raumgruppen verwalten** on the home screen to create, edit, or delete groups of 1–32 previously connected kiosks. Membership follows kiosk IDs, not IP addresses or aliases. **Durchsage starten …** offers all available kiosks, a one-time selection, and saved groups. Only currently discovered or manually added, ready members are contacted; offline members are shown and an empty/unavailable selection never falls back to all kiosks. Groups remain local to this phone.
+**Announcements**
+- Speak to all kiosks, a one-time choice, or a saved room group, and see each room's status.
+- One kiosk that fails or declines does not end the others.
+- A home-screen widget starts an announcement to all kiosks or a room group with one tap.
+- Incoming announcements can be turned off while calls still ring.
 
-In settings, switch **Durchsagen empfangen** off and save to refuse incoming announcements; the existing default is on. Calls still ring unless Do Not Disturb or quiet hours block them. **Nicht stören für …** on the home screen stores an expiration time that survives an app/device restart. The ordinary switch still enables indefinite Do Not Disturb, or cancels the current timer when turned off. At expiration, call handling uses the current quiet-hour rules immediately; the background notification refreshes within five seconds while the service is running.
+**Your kiosks**
+- Kiosks are found on the network by themselves; others can be added by address.
+- Tiles show every kiosk at a glance, two or three to a row, with Call and Video buttons.
+- Names, room icons and favorites per kiosk.
+- A ringtone for the app and one per kiosk, when calls ring in the app rather than in Android's phone app.
+- A home-screen widget per kiosk with Call and Video buttons and the kiosk's status: online, Do not disturb or offline. Kiosks are checked every 20 seconds, so a change can take that long to show.
+- Long-press the app icon to call your favorite kiosks straight away.
 
-German guides: [Installation and setup](docs/Einrichtung.md) · [Version 1.3.0 validation](docs/Pruefbericht-1.3.0.md).
+**Quiet times**
+- Do not disturb, open-ended or for 30 minutes, two hours or until tomorrow morning.
+- Weekly quiet hours, also across midnight, with kiosks that may still ring.
+- A Quick Settings tile turns Do not disturb on and off.
+- Optionally follows Android's own Do not disturb, so kiosk calls stay quiet with the rest of the phone.
 
-## Build and signing
+**And**
+- Call history with callback, and a notification for missed calls with a Call back button.
+- Material You design that follows your wallpaper's colors, in light, dark or the system's mode, with a themed app icon.
+- Settings move to a new phone with Android's backup: names, room icons, favorites, room groups and quiet hours. The shared key is entered again.
+- Settings export to a file and import from one, shared key included, for a second phone or a fresh install.
+- English and German.
+- Optional TLS with confirmed certificate fingerprints; the intercom key is kept in Android Keystore.
 
-Requires JDK 17, Android SDK platform/build-tools 35, and Gradle 8.13.
+## Setup
+
+1. Install the signed APK.
+2. On each kiosk, turn on **Remote Administration**, **Find other kiosks** and **Intercom** in Kiosk Satellite, and copy its intercom key.
+3. In the app, open **Settings** and enter the same key.
+4. Once the intercom runs, the app asks for background reception, offers the phone account to take kiosk calls in the phone app, and asks to show calls on the lock screen. Anything you skip stays in Settings.
+
+The full guide is in [docs/Setup.md](docs/Setup.md).
+
+## Building
+
+Requires JDK 17 and Android SDK 36; the Gradle wrapper fetches Gradle itself.
 
 ```
-gradle :app:testDebugUnitTest :app:lintDebug :app:assembleRelease
+./gradlew testDebugUnitTest assembleRelease
 ```
 
-The Gradle release output is unsigned. Sign it with your own key. An update to the previously distributed APK must use its original signing certificate, which is deliberately absent from this public repository.
+The release APK is unsigned; sign it with your own key, and sign every update with the same key.
 
-## Protocol and security
+## Releases
 
-Implements the public Kiosk Satellite intercom protocol independently: NSD `_kiosk-satellite._tcp.`, local identity and call routes, HMAC-SHA256 bearer tokens, replay protection, authenticated WebSockets, and PCM16LE 16 kHz mono audio. TLS is optional and requires explicit certificate pin confirmation per endpoint; there is no fallback to plaintext after enabling TLS. The shared key is encrypted with Android Keystore AES-GCM.
+Pushing a tag that matches the app's version, such as `v1.0.0`, makes GitHub Actions build, test and lint the app and publish a GitHub release with the APK. It is signed when the repository has these secrets, and unsigned otherwise:
 
-The Android `connectedDevice` foreground service maintains LAN reception. Microphone and `phoneCall` foreground types are added only when needed. The phone account uses `ConnectionService` without taking the default dialer role or reading the call log. Android and device-specific power management can still delay or block background reception.
+- `KEYSTORE_BASE64`: the keystore, as `base64 -w0 release.jks`
+- `KEYSTORE_PASSWORD`
+- `KEY_ALIAS` and `KEY_PASSWORD`, only when the keystore holds several keys or the key has its own password
 
-## Validation
+## Protocol
 
-JVM tests cover protocol and call handling, real HTTP/WebSocket transitions, Android phone-session state, quiet-hour boundaries, announcement failure isolation and recipient selection, room-group persistence, incoming-announcement policy, and temporary Do Not Disturb expiration. Android Lint and a release build are run before distributing the signed APK. Hardware microphone behavior, Samsung Phone UI, widget placement, boot delivery, and visual layout on physical screen sizes still require device testing.
+Intercom Satellite speaks the [Kiosk Satellite intercom protocol](https://kiosksatellite.com/docs/intercom/): discovery over mDNS (`_kiosk-satellite._tcp`), HMAC-SHA256 tokens, PCM16 16 kHz audio over WebSockets, and H.264 video over a separate per-call WebSocket with per-frame acknowledgements.
 
-Dependencies and licenses: [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt). Protocol reference: [Kiosk Satellite intercom documentation](https://kiosksatellite.com/docs/intercom/).
+## Credits
+
+- [Intercom Pocket](https://github.com/Eibelucas/intercom-pocket) by Eibelucas, the app this project grew out of. Its protocol implementation, phone-app integration, announcements, room groups and quiet hours are the foundation Intercom Satellite builds on. Thank you!
+- [Kiosk Satellite](https://github.com/jxlarrea/kiosk-satellite) by Xavier Larrea, the kiosk app and intercom protocol this app talks to.
+- [Material Design Icons](https://pictogrammers.com/library/mdi/) by Pictogrammers for the room icons, [Material Icons](https://fonts.google.com/icons) by Google for the other icons, and the GitHub mark from [Octicons](https://primer.style/octicons/) by GitHub.
+- [NanoHTTPD](https://github.com/NanoHttpd/nanohttpd), [OkHttp](https://square.github.io/okhttp/) and [Material Components for Android](https://github.com/material-components/material-components-android).
+
+Licenses of the bundled libraries: [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
+
+## License
+
+[Apache License 2.0](LICENSE); see [NOTICE](NOTICE) for attribution. The bundled libraries and icons keep their own licenses, listed in [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The pill of an offline kiosk, faded like a disabled button. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/widget_primary_dim" />
+    <corners android:radius="14dp" />
+</shape>

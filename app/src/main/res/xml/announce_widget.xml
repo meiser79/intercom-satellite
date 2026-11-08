@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android" android:minWidth="110dp" android:minHeight="40dp" android:targetCellWidth="2" android:targetCellHeight="1" android:initialLayout="@layout/announce_widget" android:previewLayout="@layout/announce_widget" android:configure="me.meiser79.intercomsatellite.WidgetSetupActivity" android:widgetCategory="home_screen" android:resizeMode="horizontal|vertical" android:description="@string/announce_widget_description"/>

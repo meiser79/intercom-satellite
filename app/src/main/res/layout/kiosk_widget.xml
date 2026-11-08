@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/widget_background">
-    <TextView android:id="@+id/widget_brand" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/widget_brand" android:textColor="#386E72" android:textSize="11sp" android:textStyle="bold"/>
-    <TextView android:id="@+id/widget_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="@string/widget_select" android:textColor="#1B2526" android:textSize="18sp" android:textStyle="bold"/>
-    <TextView android:id="@+id/widget_action" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="@string/widget_call" android:textColor="#526161" android:textSize="12sp"/>
+<!-- The kiosk's room icon and name, with call and video call buttons below them. Widgets are
+     RemoteViews, which take android:tint, not AppCompat's app:tint. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingStart="8dp"
+    android:paddingTop="5dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="5dp"
+    tools:ignore="UseAppTint">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- Room icon with the kiosk's status as a badge at its bottom right. -->
+        <FrameLayout
+            android:layout_width="24dp"
+            android:layout_height="24dp">
+
+            <FrameLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/widget_circle_container">
+
+                <ImageView
+                    android:id="@+id/widget_icon"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_room_home"
+                    android:tint="@color/widget_on_container" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/widget_status"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="bottom|end"
+                android:importantForAccessibility="no"
+                android:src="@drawable/widget_status_offline" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/widget_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/widget_select"
+            android:textColor="@color/widget_on_surface"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Call and video call as on the app's kiosk tiles: filled, then tonal, both pills. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/widget_call"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_weight="1"
+            android:background="@drawable/widget_pill_primary"
+            android:contentDescription="@string/kiosk_call"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_call"
+            android:tint="@color/widget_on_primary" />
+
+        <ImageView
+            android:id="@+id/widget_video"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/widget_pill_container"
+            android:contentDescription="@string/kiosk_video_call"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_videocam"
+            android:tint="@color/widget_on_container" />
+    </LinearLayout>
 </LinearLayout>

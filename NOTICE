@@ -1,0 +1,12 @@
+Intercom Satellite
+Copyright 2026 Peter Meiser
+
+Intercom Satellite is based on Intercom Pocket by Eibelucas
+(https://github.com/Eibelucas/intercom-pocket). Its source files have been
+modified and extended by Peter Meiser.
+
+The room icons are Material Design Icons by Pictogrammers
+(https://pictogrammers.com/library/mdi/), the other icons Material Icons by
+Google (https://fonts.google.com/icons), both licensed under the Apache
+License, Version 2.0. Further bundled libraries and their licenses are listed in
+THIRD-PARTY-NOTICES.txt.
