@@ -1,4 +1,4 @@
-# Intercom Satellite 1.0.0 – Setup
+# Intercom Satellite – Setup
 
 1. Install a signed APK on your phone. The build from this repository is unsigned and must be signed before installation; sign every update with the same key so settings are kept.
 
