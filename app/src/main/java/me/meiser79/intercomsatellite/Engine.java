@@ -1,6 +1,7 @@
 package me.meiser79.intercomsatellite;
 
 import android.content.Context;
+import android.os.PowerManager;
 
 import okhttp3.*;
 
@@ -58,6 +59,7 @@ final class Engine implements IntercomServer.Listener {
     private ScheduledFuture<?> timeout;
     private Discovery discovery;
     private final Context context;
+    private PowerManager.WakeLock incomingWake;
     final Messages msg;
     final String appVersion;
 
@@ -693,7 +695,23 @@ final class Engine implements IntercomServer.Listener {
         }
     }
 
+    /**
+     * Keeps the CPU awake for a moment after a kiosk calls, so the call rings even when the phone
+     * was asleep. Once it rings, the service keeps the CPU awake for the whole call.
+     */
+    private void wakeForIncoming() {
+        if (incomingWake == null) {
+            PowerManager pm = context == null ? null : context.getSystemService(PowerManager.class);
+            if (pm == null) return;
+            incomingWake =
+                    pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "IntercomSatellite:incoming");
+            incomingWake.setReferenceCounted(false);
+        }
+        incomingWake.acquire(10_000);
+    }
+
     public synchronized JSONObject incoming(JSONObject body, String token, String host) {
+        wakeForIncoming();
         String id = body.optString("call");
         JSONObject from = body.optJSONObject("from");
         if (!Wire.validCallId(id) || from == null)

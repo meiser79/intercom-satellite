@@ -109,14 +109,6 @@ public final class IntercomService extends Service {
                 engine.start();
                 lastError = "";
                 config.prefs.edit().putBoolean("enabledBefore", true).apply();
-                if (wake == null) {
-                    wake =
-                            getSystemService(PowerManager.class)
-                                    .newWakeLock(
-                                            PowerManager.PARTIAL_WAKE_LOCK,
-                                            "IntercomSatellite:reachable");
-                    wake.acquire();
-                }
                 WifiManager wifi =
                         (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
                 if (wifi != null && wifiLock == null) {
@@ -184,6 +176,7 @@ public final class IntercomService extends Service {
         Engine e = engine;
         if (e == null) return;
         NotificationManager nm = getSystemService(NotificationManager.class);
+        stayAwake(e.active());
         phone.sync(e);
         boolean ringing = e.state.equals("ringing") && !e.phoneManaged;
         if (ringing && !ringingId.equals(e.callId)) {
@@ -393,6 +386,22 @@ public final class IntercomService extends Service {
             proximity.acquire(4 * 60 * 60 * 1000L);
         } else if (!near && proximity != null) {
             releaseProximity();
+        }
+    }
+
+    /**
+     * Keeps the CPU awake only while a call or announcement runs. In between, the phone may sleep:
+     * a kiosk connecting wakes it, and the Engine then holds a short lock until the call is set up.
+     */
+    private void stayAwake(boolean busy) {
+        if (busy && wake == null) {
+            wake =
+                    getSystemService(PowerManager.class)
+                            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "IntercomSatellite:call");
+            wake.acquire();
+        } else if (!busy && wake != null) {
+            if (wake.isHeld()) wake.release();
+            wake = null;
         }
     }
 
